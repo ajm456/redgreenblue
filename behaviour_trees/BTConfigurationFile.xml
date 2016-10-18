@@ -1,0 +1,12 @@
+<Configuration>
+	<BTLibrary>
+		<BTFile>test.xbt</BTFile>
+		
+		<LibraryClassName>TestBTLibrary</LibraryClassName>
+		<LibraryPackage>game.bts</LibraryPackage>
+		<LibraryOutputDirectory>src/game/bts</LibraryOutputDirectory>
+		<DomainFile>test.xml</DomainFile>
+		<ModelActionsPackage>game.bts.actions</ModelActionsPackage>
+		<ModelConditionsPackage>game.bts.conditions</ModelConditionsPackage>
+	</BTLibrary>
+</Configuration>

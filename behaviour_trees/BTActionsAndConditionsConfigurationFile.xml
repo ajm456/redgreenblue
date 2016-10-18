@@ -1,0 +1,12 @@
+<Configuration>
+	<DomainFile>test.xml</DomainFile>
+	<ModelActionsPackage>game.bts.model_actions</ModelActionsPackage>
+	<ModelConditionsPackage>game.bts.model_conditions</ModelConditionsPackage>
+	<ModelActionsOutputDirectory>src/game/bts/model_actions</ModelActionsOutputDirectory>
+	<ModelConditionsOutputDirectory>src/game/bts/model_conditions</ModelConditionsOutputDirectory>
+	
+	<ExecutionActionsPackage>game.bts.execution_actions</ExecutionActionsPackage>
+	<ExecutionConditionsPackage>game.bts.execution_conditions</ExecutionConditionsPackage>
+	<ExecutionActionsOutputDirectory>src/game/bts/execution_actions</ExecutionActionsOutputDirectory>
+	<ExecutionConditionsOutputDirectory>src/game/bts/execution_conditions</ExecutionConditionsOutputDirectory>
+</Configuration>
