@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.SwingUtilities;
 
@@ -21,7 +20,6 @@ import game.grid.CollisionListener;
 import game.grid.Grid;
 import jbt.execution.core.BTExecutorFactory;
 import jbt.execution.core.ContextFactory;
-import jbt.execution.core.ExecutionTask.Status;
 import jbt.execution.core.IBTExecutor;
 import jbt.execution.core.IBTLibrary;
 import jbt.execution.core.IContext;
@@ -52,12 +50,19 @@ public class GameManager implements CollisionListener
 		enemies = new ArrayList<Enemy>();
 		projectiles = new ArrayList<Projectile>();
 		grid = new Grid(this);
+		
 		btLibrary = new TestBTLibrary();
 		context = ContextFactory.createContext(btLibrary);
 		ArrayList<IBTExecutor> treeExecutors = new ArrayList<IBTExecutor>();
 		treeHandler = new BTHandler(treeExecutors);
 	}
 	
+	/**
+	 * Handles KeyEvents fired from the Window class when a key is pressed, 
+	 * usually passing them to the Player object.
+	 * 
+	 * @param e		KeyEvent object given by the Window class
+	 */
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyChar() == KeyEvent.VK_SPACE) {
 			Projectile pShot = new Projectile(grid, player.getX()-5+player.getWidth()/2, player.getY()-10, 10, 10, player.getElement(), 7, 10, player);
@@ -66,10 +71,21 @@ public class GameManager implements CollisionListener
 			player.keyPressed(e);
 		}
 	}
+	
+	/**
+	 * Handles KeyEvents fired from the Window class when a key is released,
+	 * passing them to the Player object.
+	 * 
+	 * @param e		KeyEvent object given by the Window class
+	 */
 	public void keyReleased(KeyEvent e) {
 		player.keyReleased(e);
 	}
 	
+	/**
+	 * Safely invokes the required Swing methods to create the Window to be
+	 * displayed.
+	 */
 	public void buildWindow() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -79,10 +95,16 @@ public class GameManager implements CollisionListener
 		});
 	}
 	
+	/**
+	 * Creates the Player object.
+	 */
 	public void addPlayer() {
 		player = new Player(grid, 300, 400, 50, 50, Element.RED);
 	}
 	
+	/**
+	 * Builds behaviour trees for assigning AI behaviours to enemies.
+	 */
 	public void setUpTrees() {
 		ModelTask sampleEnemy1Tree = btLibrary.getBT("test");
 		IBTExecutor btExecutor = BTExecutorFactory.createBTExecutor(sampleEnemy1Tree, context);
@@ -90,6 +112,9 @@ public class GameManager implements CollisionListener
 		new Thread(treeHandler).start();
 	}
 	
+	/**
+	 * Adds some Enemy objects to the current game.
+	 */
 	public void addSampleEnemies() {		
 		SampleEnemy e1 = new SampleEnemy(grid, 50, 70, 40, 40, Element.GREEN, 20);
 		enemies.add(e1);
@@ -108,7 +133,12 @@ public class GameManager implements CollisionListener
 		player.drawEntity(g);
 	}
 	
+	/**
+	 * Moves all entities, checking for any collisions or other events via the
+	 * Grid class.
+	 */
 	public void update() {
+		long t1 = System.nanoTime();
 		player.move();
 		
 		ArrayList<Integer> projectileRemoveIndexes = new ArrayList<Integer>();
@@ -132,7 +162,7 @@ public class GameManager implements CollisionListener
 		}
 		window.update();
 	}
-
+	
 	@Override
 	public void collisionOccurred(CollisionEvent e) {
 		Entity e1 = e.getEntities()[0];

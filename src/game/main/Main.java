@@ -9,6 +9,7 @@ public class Main
 		gm.addPlayer();
 		gm.addSampleEnemies();
 		gm.setUpTrees();
+		
 		while(true) {
 			gm.update();
 		}

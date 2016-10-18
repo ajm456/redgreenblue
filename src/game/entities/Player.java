@@ -61,7 +61,7 @@ public class Player extends Entity
 	}
 	
 	@Override
-	public boolean move() {
+	public boolean move(long dT) {
 		if	(
 				upPressed && leftPressed 	||
 				upPressed && rightPressed 	||
@@ -71,15 +71,15 @@ public class Player extends Entity
 		} else {
 			speed = AXIS_SPEED;
 		}
-		if(upPressed && !downPressed && y-speed >= 0) {
-			grid.move(this, x, y - speed);
-		} else if(downPressed && !upPressed && y+height+speed <= Window.HEIGHT) {
-			grid.move(this, x, y + speed);
+		if(upPressed && !downPressed && y-speed*dT >= 0) {
+			grid.move(this, x, y - speed*dT);
+		} else if(downPressed && !upPressed && y+height+speed*dT <= Window.HEIGHT) {
+			grid.move(this, x, y + speed*dT);
 		}
-		if(leftPressed && !rightPressed && x-speed >= 0) {
-			grid.move(this, x - speed, y);
-		} else if(rightPressed && !leftPressed && x+width+speed <= Window.WIDTH) {
-			grid.move(this, x + speed, y);
+		if(leftPressed && !rightPressed && x-speed*dT >= 0) {
+			grid.move(this, x - speed*dT, y);
+		} else if(rightPressed && !leftPressed && x+width+speed*dT <= Window.WIDTH) {
+			grid.move(this, x + speed*dT, y);
 		}
 		
 		return true;

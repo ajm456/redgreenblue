@@ -1,6 +1,5 @@
 package game.frame;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -48,7 +47,6 @@ public class Window
 	}
 	
 	public void build() {
-		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		frame.add(panel);

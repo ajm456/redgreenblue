@@ -16,8 +16,8 @@ public class Projectile extends Entity
 	}
 
 	@Override
-	public boolean move() {
-		return grid.move(this, x, y - speed);
+	public boolean move(long dT) {
+		return grid.move(this, x, y - speed*dT);
 	}
 	
 	public boolean collidedWith(Entity e) {
