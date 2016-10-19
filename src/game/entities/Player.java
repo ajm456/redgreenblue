@@ -61,7 +61,7 @@ public class Player extends Entity
 	}
 	
 	@Override
-	public boolean move(long dT) {
+	public boolean move(double dT) {
 		if	(
 				upPressed && leftPressed 	||
 				upPressed && rightPressed 	||

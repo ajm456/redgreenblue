@@ -49,5 +49,5 @@ public abstract class Entity
 	public Entity getNext() { return next; }
 	public void setNext(Entity next) { this.next = next; }
 	
-	public abstract boolean move(long dT);
+	public abstract boolean move(double dT);
 }

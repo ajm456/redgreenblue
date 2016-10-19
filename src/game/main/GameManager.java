@@ -137,9 +137,8 @@ public class GameManager implements CollisionListener
 	 * Moves all entities, checking for any collisions or other events via the
 	 * Grid class.
 	 */
-	public void update() {
-		long t1 = System.nanoTime();
-		player.move();
+	public void update(double dT) {
+		player.move(dT);
 		
 		ArrayList<Integer> projectileRemoveIndexes = new ArrayList<Integer>();
 		
@@ -147,20 +146,17 @@ public class GameManager implements CollisionListener
 		
 		// Move projectiles - removes ones out of bounds.
 		for(Projectile p : projectiles) {
-			if(!p.move()) {
+			if(!p.move(dT)) {
 				projectileRemoveIndexes.add(projectiles.indexOf(p));
 			}
 		}
 		for(Integer i : projectileRemoveIndexes) {
 			projectiles.remove((int) i);
 		}
-		
-		try {
-			Thread.sleep(16);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		window.update();
+	}
+	
+	public void render() {
+		window.render();
 	}
 	
 	@Override

@@ -55,7 +55,7 @@ public class Window
 		frame.setVisible(true);
 	}
 	
-	public void update() {
+	public void render() {
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
 				@Override

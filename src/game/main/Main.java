@@ -10,8 +10,22 @@ public class Main
 		gm.addSampleEnemies();
 		gm.setUpTrees();
 		
+		long t1 = 0L;
+		long t2 = System.nanoTime();
 		while(true) {
-			gm.update();
+			t2 = t1;
+			t2 = System.nanoTime();
+			double dT = (double) (t2-t1);
+			
+			gm.update(dT);
+			gm.render();
+			
+			try {
+				Thread.sleep(128000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
