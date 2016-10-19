@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.SwingUtilities;
 
@@ -149,14 +150,12 @@ public class GameManager implements CollisionListener
 		this.dT = dT;
 		
 		// Move projectiles - removes ones out of bounds.
-		ArrayList<Integer> projectileRemoveIndexes = new ArrayList<Integer>();
-		for(Projectile p : projectiles) {
+		Iterator<Projectile> i = projectiles.iterator();
+		while(i.hasNext()) {
+			Projectile p = i.next();
 			if(!p.move(dT)) {
-				projectileRemoveIndexes.add(projectiles.indexOf(p));
+				i.remove();
 			}
-		}
-		for(Integer i : projectileRemoveIndexes) {
-			projectiles.remove((int) i);
 		}
 
 		player.move(dT);
@@ -164,6 +163,10 @@ public class GameManager implements CollisionListener
 		grid.checkCollisions();
 	}
 
+	/**
+	 * Calls {@link game.frame.Window#render() Window.render()}, rendering
+	 * the current Graphics object.
+	 */
 	public void render() {
 		window.render();
 	}

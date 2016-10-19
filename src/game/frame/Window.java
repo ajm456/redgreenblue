@@ -55,6 +55,10 @@ public class Window
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * Repaints the JPanel and JFrame objects being displayed with their
+	 * up to date graphics objects.
+	 */
 	public void render() {
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
