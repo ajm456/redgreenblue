@@ -12,7 +12,7 @@ public class BossEnemy1 extends Enemy
 	}
 
 	@Override
-	public boolean move() {
+	public boolean move(double dT) {
 		return true;
 	}
 	

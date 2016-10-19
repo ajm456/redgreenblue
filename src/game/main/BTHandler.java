@@ -24,7 +24,6 @@ public class BTHandler implements Runnable
 	public void run() {
 		while(true) {
 			for(IBTExecutor i : treeExecutors) {
-				System.out.println(treeExecutors.size());
 				if(i.getStatus() == Status.RUNNING) {
 					i.tick();
 				}

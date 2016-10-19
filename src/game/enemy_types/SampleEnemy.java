@@ -15,7 +15,7 @@ public class SampleEnemy extends Enemy
 	}
 
 	@Override
-	public boolean move() {
+	public boolean move(double dT) {
 		
 		Point destination = new Point(Window.WIDTH/2, Window.HEIGHT/2);
 		setXYVel(destination);

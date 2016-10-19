@@ -41,7 +41,9 @@ public class GameManager implements CollisionListener
 	private IBTLibrary btLibrary;
 	private IContext context;
 	private BTHandler treeHandler;
-	
+
+	private double dT = 0;
+
 	/**
 	 * GameManager constructor - initialises all fields used throughout gameplay.
 	 */
@@ -50,13 +52,13 @@ public class GameManager implements CollisionListener
 		enemies = new ArrayList<Enemy>();
 		projectiles = new ArrayList<Projectile>();
 		grid = new Grid(this);
-		
+
 		btLibrary = new TestBTLibrary();
 		context = ContextFactory.createContext(btLibrary);
 		ArrayList<IBTExecutor> treeExecutors = new ArrayList<IBTExecutor>();
 		treeHandler = new BTHandler(treeExecutors);
 	}
-	
+
 	/**
 	 * Handles KeyEvents fired from the Window class when a key is pressed, 
 	 * usually passing them to the Player object.
@@ -65,13 +67,13 @@ public class GameManager implements CollisionListener
 	 */
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyChar() == KeyEvent.VK_SPACE) {
-			Projectile pShot = new Projectile(grid, player.getX()-5+player.getWidth()/2, player.getY()-10, 10, 10, player.getElement(), 7, 10, player);
+			Projectile pShot = new Projectile(grid, player.getX()-5+player.getWidth()/2, player.getY()-2*player.getAxisSpeed()*dT, 10, 10, player.getElement(), 600, 10, player);
 			projectiles.add(pShot);
 		} else {
 			player.keyPressed(e);
 		}
 	}
-	
+
 	/**
 	 * Handles KeyEvents fired from the Window class when a key is released,
 	 * passing them to the Player object.
@@ -81,7 +83,7 @@ public class GameManager implements CollisionListener
 	public void keyReleased(KeyEvent e) {
 		player.keyReleased(e);
 	}
-	
+
 	/**
 	 * Safely invokes the required Swing methods to create the Window to be
 	 * displayed.
@@ -94,14 +96,14 @@ public class GameManager implements CollisionListener
 			}
 		});
 	}
-	
+
 	/**
 	 * Creates the Player object.
 	 */
 	public void addPlayer() {
 		player = new Player(grid, 300, 400, 50, 50, Element.RED);
 	}
-	
+
 	/**
 	 * Builds behaviour trees for assigning AI behaviours to enemies.
 	 */
@@ -111,7 +113,7 @@ public class GameManager implements CollisionListener
 		treeHandler.add(btExecutor);
 		new Thread(treeHandler).start();
 	}
-	
+
 	/**
 	 * Adds some Enemy objects to the current game.
 	 */
@@ -121,6 +123,12 @@ public class GameManager implements CollisionListener
 		context.setVariable("CurrentEntityID", "sampleEnemy1");
 	}
 	
+	/**
+	 * Draws all relevant game entities and graphics onto the current Graphics
+	 * object.
+	 * 
+	 * @param g		the Graphics object being displayed
+	 */
 	public void draw(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
@@ -132,19 +140,16 @@ public class GameManager implements CollisionListener
 		}
 		player.drawEntity(g);
 	}
-	
+
 	/**
 	 * Moves all entities, checking for any collisions or other events via the
 	 * Grid class.
 	 */
 	public void update(double dT) {
-		player.move(dT);
-		
-		ArrayList<Integer> projectileRemoveIndexes = new ArrayList<Integer>();
-		
-		grid.checkCollisions();
+		this.dT = dT;
 		
 		// Move projectiles - removes ones out of bounds.
+		ArrayList<Integer> projectileRemoveIndexes = new ArrayList<Integer>();
 		for(Projectile p : projectiles) {
 			if(!p.move(dT)) {
 				projectileRemoveIndexes.add(projectiles.indexOf(p));
@@ -153,23 +158,27 @@ public class GameManager implements CollisionListener
 		for(Integer i : projectileRemoveIndexes) {
 			projectiles.remove((int) i);
 		}
+
+		player.move(dT);
+
+		grid.checkCollisions();
 	}
-	
+
 	public void render() {
 		window.render();
 	}
-	
+
 	@Override
 	public void collisionOccurred(CollisionEvent e) {
 		Entity e1 = e.getEntities()[0];
 		Entity e2 = e.getEntities()[1];
-		
+
 		//System.out.println("CollisionEvent occurred between " + e1.toString() + " and " + e2.toString());
-		
+
 		if(e1 instanceof Projectile) {
 			grid.removeFromGrid(e1);
 			projectiles.remove(e1);
-			
+
 			if(e2 instanceof Enemy) {
 				if(e1.getElement() == e2.getElement()) {
 					((Enemy) e2).incrementPower();
@@ -186,7 +195,7 @@ public class GameManager implements CollisionListener
 			grid.removeFromGrid(e2);
 			projectiles.remove(e2);
 		} else {
-			
+
 		}
 	}
 }

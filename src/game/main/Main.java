@@ -4,28 +4,29 @@ public class Main
 {
 	public static void main(String[] args) {
 		GameManager gm = new GameManager();
-		
+
 		gm.buildWindow();
 		gm.addPlayer();
 		gm.addSampleEnemies();
 		gm.setUpTrees();
-		
+
 		long t1 = 0L;
 		long t2 = System.nanoTime();
 		while(true) {
-			t2 = t1;
+			t1 = t2;
 			t2 = System.nanoTime();
-			double dT = (double) (t2-t1);
-			
+			double dT = ((double) (t2-t1))/1000000000;
+
 			gm.update(dT);
 			gm.render();
 			
 			try {
-				Thread.sleep(128000);
+				Thread.sleep(16);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			System.out.println(1/dT);
 		}
 	}
 }

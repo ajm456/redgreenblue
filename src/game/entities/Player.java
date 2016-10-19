@@ -8,7 +8,7 @@ import game.grid.Grid;
 public class Player extends Entity 
 {
 	private float speed;
-	private static final float AXIS_SPEED = 5;
+	private static final float AXIS_SPEED = 300;
 	private static final float DIAG_SPEED = (float) Math.sqrt(Math.pow(AXIS_SPEED, 2)/2);
 	private boolean upPressed, downPressed, leftPressed, rightPressed, colorChanged;
 	
@@ -86,6 +86,7 @@ public class Player extends Entity
 	}
 	
 	public int getWidth() { return width; }
+	public double getAxisSpeed() { return AXIS_SPEED; }
 	
 	@Override
 	public String toString() {
