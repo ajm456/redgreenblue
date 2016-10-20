@@ -16,17 +16,12 @@ public class Main
 			t1 = t2;
 			t2 = System.nanoTime();
 			double dT = ((double) (t2-t1))/1000000000;
+			System.out.println(1/dT);
+			if(dT > 0.15)
+				dT = 0.15;
 
 			gm.update(dT);
 			gm.render();
-			
-			try {
-				Thread.sleep(16);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			System.out.println(1/dT);
 		}
 	}
 }

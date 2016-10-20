@@ -68,7 +68,7 @@ public class GameManager implements CollisionListener
 	 */
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyChar() == KeyEvent.VK_SPACE) {
-			Projectile pShot = new Projectile(grid, player.getX()-5+player.getWidth()/2, player.getY()-2*player.getAxisSpeed()*dT, 10, 10, player.getElement(), 600, 10, player);
+			Projectile pShot = new Projectile(grid, player.getX()-5+player.getWidth()/2, player.getY()-10-2*player.getAxisSpeed()*dT, 10, 10, player.getElement(), 600, 10, player);
 			projectiles.add(pShot);
 		} else {
 			player.keyPressed(e);
