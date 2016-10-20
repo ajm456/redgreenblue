@@ -2,7 +2,7 @@
 //                   MACHINE GENERATED CODE                
 //                       DO NOT MODIFY                     
 //                                                         
-// Generated on 10/07/2016 15:32:24
+// Generated on 10/20/2016 11:07:37
 // ******************************************************* 
 package game.bts.model_actions;
 

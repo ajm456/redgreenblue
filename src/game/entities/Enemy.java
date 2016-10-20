@@ -1,22 +1,20 @@
 package game.entities;
 
-import java.awt.Point;
-
 import game.grid.Grid;
 
 public abstract class Enemy extends Entity 
 {
 	protected int hp, maxHp;
 	protected int power;
-	protected double speed, xVel, yVel;
-	protected Point destination;
+	protected double speed, xVel, yVel, targetX, targetY;
 	
 	public Enemy(Grid grid, double x, double y, int width, int height, Element element, int hp) {
 		super(grid, x, y, width, height, element);
 		this.hp = hp;
 		maxHp = hp;
 		power = 1;
-		destination = new Point((int)x, (int)y);
+		targetX = x;
+		targetY = y;
 	}
 	
 	public int getHp() { return hp; }
@@ -29,13 +27,15 @@ public abstract class Enemy extends Entity
 	}
 	public void incrementPower() { power++; }
 	
-	protected boolean reachedDestination(Point destination) {
-		return Math.hypot(x - destination.getX(), y - destination.getY()) <= 15;
+	public boolean reachedDestination(double targetX, double targetY) {
+		return Math.hypot(x - targetX, y - targetY) <= 15;
 	}
 	
-	protected void setXYVel(Point destination) {
-		float absDist = (float) Math.hypot(x - destination.getX(), y - destination.getY());
-		xVel = (destination.getX() - x)*speed / absDist;
-		yVel = (destination.getY() - y)*speed / absDist;
+	public double getXVel() { return xVel; }
+	public double getYVel() { return yVel; }
+	public void setXYVel(double targetX, double targetY) {
+		double absDist = Math.hypot(x - targetX, y - targetY);
+		xVel = (targetX - x)*speed / absDist;
+		yVel = (targetY - y)*speed / absDist;
 	}
 }

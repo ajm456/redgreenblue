@@ -1,5 +1,5 @@
 <Configuration>
-	<DomainFile>test.xml</DomainFile>
+	<DomainFile>ComputeAndMoveDomain.xml</DomainFile>
 	<ModelActionsPackage>game.bts.model_actions</ModelActionsPackage>
 	<ModelConditionsPackage>game.bts.model_conditions</ModelConditionsPackage>
 	<ModelActionsOutputDirectory>src/game/bts/model_actions</ModelActionsOutputDirectory>

@@ -4,7 +4,7 @@
 //                                                         
 //           ABSTRACT METHODS MUST BE IMPLEMENTED          
 //                                                         
-// Generated on 10/07/2016 15:32:24
+// Generated on 10/20/2016 11:07:38
 // ******************************************************* 
 package game.bts.execution_actions;
 
@@ -65,6 +65,10 @@ public class Move extends jbt.execution.task.leaf.action.ExecutionAction {
 				jbt.execution.core.BTExecutor.BTExecutorList.TICKABLE, this);
 		/* TODO: this method's implementation must be completed. */
 		System.out.println(this.getClass().getCanonicalName() + " spawned");
+		
+		game.enemy_types.SampleEnemy e = (game.enemy_types.SampleEnemy) this.getContext().getVariable("enemy1");
+		float[] target = getTarget();
+		e.setXYVel((double)target[0], (double)target[1]);
 	}
 
 	protected jbt.execution.core.ExecutionTask.Status internalTick() {
@@ -73,7 +77,15 @@ public class Move extends jbt.execution.task.leaf.action.ExecutionAction {
 		 * should only return Status.SUCCESS, Status.FAILURE or Status.RUNNING.
 		 * No other values are allowed.
 		 */
-		System.out.println("Hello from Move action!");
+		float[] target = getTarget();
+		game.grid.Grid grid = (game.grid.Grid) this.getContext().getVariable("grid");
+		game.enemy_types.SampleEnemy enemy = (game.enemy_types.SampleEnemy) this.getContext().getVariable("enemy1");
+		double dT = (double) this.getContext().getVariable("dT");
+		
+		grid.move(enemy, enemy.getX() + enemy.getXVel()*dT, enemy.getY() + enemy.getYVel()*dT);
+		if(enemy.reachedDestination((double)target[0], (double)target[1])) {
+			return jbt.execution.core.ExecutionTask.Status.SUCCESS;
+		}
 		return jbt.execution.core.ExecutionTask.Status.RUNNING;
 	}
 

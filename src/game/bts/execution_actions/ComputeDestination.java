@@ -4,7 +4,7 @@
 //                                                         
 //           ABSTRACT METHODS MUST BE IMPLEMENTED          
 //                                                         
-// Generated on 10/07/2016 15:32:24
+// Generated on 10/20/2016 11:07:38
 // ******************************************************* 
 package game.bts.execution_actions;
 
@@ -33,6 +33,9 @@ public class ComputeDestination extends
 				jbt.execution.core.BTExecutor.BTExecutorList.TICKABLE, this);
 		/* TODO: this method's implementation must be completed. */
 		System.out.println(this.getClass().getCanonicalName() + " spawned");
+		
+		float[] target = new float[] {(float) (Math.random()*600), (float) (Math.random()*700)};
+		this.getContext().setVariable("unitDestination", target);
 	}
 
 	protected jbt.execution.core.ExecutionTask.Status internalTick() {
@@ -41,6 +44,10 @@ public class ComputeDestination extends
 		 * should only return Status.SUCCESS, Status.FAILURE or Status.RUNNING.
 		 * No other values are allowed.
 		 */
+		
+		if(this.getContext().getVariable("unitDestination") == null) {
+			return jbt.execution.core.ExecutionTask.Status.RUNNING;
+		}
 		return jbt.execution.core.ExecutionTask.Status.SUCCESS;
 	}
 

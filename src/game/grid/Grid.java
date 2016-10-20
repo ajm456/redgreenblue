@@ -189,7 +189,7 @@ public class Grid
 	
 	/**
 	 * Creates a new {@link game.grid.CollisionEvent CollisionEvent} and sends
-	 * it to the current {@link game.main.GameManager GameManager} object.
+	 * it to the current {@link game.main.GameEngine GameManager} object.
 	 * 
 	 * @param 	e1	the first Entity object involved in the collision
 	 * @param 	e2	the second Entity object involved in the collision

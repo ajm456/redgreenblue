@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import game.main.GameManager;
+import game.main.GameEngine;
 
 public class Window 
 {
@@ -22,7 +22,7 @@ public class Window
 	private JFrame frame;
 	private JPanel panel;
 	
-	public Window(GameManager gm) {
+	public Window(GameEngine gm) {
 		frame = new JFrame();
 		panel = new JPanel(){
 			@Override
