@@ -96,6 +96,18 @@ public class GameEngine implements CollisionListener
 	public void addSampleEnemies() {		
 		SampleEnemy e1 = new SampleEnemy(grid, 50, 70, 40, 40, Element.GREEN, 20);
 		enemies.add(e1);
+		/*
+		SampleEnemy e2 = new SampleEnemy(grid, 80, 70, 40, 40, Element.RED, 10);
+		enemies.add(e2);
+		SampleEnemy e3 = new SampleEnemy(grid, 50, 200, 40, 40, Element.BLUE, 30);
+		enemies.add(e3);
+		SampleEnemy e4 = new SampleEnemy(grid, 120, 300, 40, 40, Element.GREEN, 40);
+		enemies.add(e4);
+		SampleEnemy e5 = new SampleEnemy(grid, 400, 40, 40, 40, Element.RED, 15);
+		enemies.add(e5);
+		SampleEnemy e6 = new SampleEnemy(grid, 200, 200, 40, 40, Element.BLUE, 20);
+		enemies.add(e6);
+		*/
 	}
 	
 	/**
@@ -130,6 +142,12 @@ public class GameEngine implements CollisionListener
 			if(!p.move(dT)) {
 				i1.remove();
 			}
+		}
+		
+		// Move enemies incl. their behaviours.
+		for(Enemy e : enemies) {
+			e.behave();
+			e.move(dT);
 		}
 		
 		player.move(dT);

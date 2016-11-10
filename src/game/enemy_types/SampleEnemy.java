@@ -2,8 +2,8 @@ package game.enemy_types;
 
 import game.entities.Element;
 import game.entities.Enemy;
+import game.frame.Window;
 import game.grid.Grid;
-import game.util.Maths;
 
 public class SampleEnemy extends Enemy 
 {	
@@ -15,6 +15,17 @@ public class SampleEnemy extends Enemy
 	@Override
 	public boolean move(double dT) {
 		return grid.move(this, x + xVel*dT, y + yVel*dT);
+	}
+
+	@Override
+	public void behave() {
+		if(!hasTarget) {
+			targetX = Math.random()*Window.WIDTH;
+			targetY = Math.random()*Window.HEIGHT;
+			setXYVel(targetX, targetY);
+			hasTarget = true;
+		}
+		reachedDestination();
 	}
 
 }
