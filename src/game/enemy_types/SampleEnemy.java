@@ -2,10 +2,11 @@ package game.enemy_types;
 
 import game.entities.Element;
 import game.entities.Enemy;
+import game.entities.Player;
 import game.frame.Window;
 import game.grid.Grid;
 
-public class SampleEnemy extends Enemy 
+public class SampleEnemy extends Enemy
 {	
 	public SampleEnemy(Grid grid, double x, double y, int width, int height, Element element, int hp) {
 		super(grid, x, y, width, height, element, hp);
@@ -26,6 +27,14 @@ public class SampleEnemy extends Enemy
 			hasTarget = true;
 		}
 		reachedDestination();
+	}
+
+	@Override
+	public void shoot(Player p) {
+		if(	p.getX()+p.getWidth() >= x &&
+			p.getX() <= x+width) {
+			System.out.println("Shoot!");
+		}
 	}
 
 }

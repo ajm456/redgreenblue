@@ -7,18 +7,20 @@ import game.grid.Grid;
 
 public class Player extends Entity 
 {
-	private float speed;
-	private static final float AXIS_SPEED = 300;
-	private static final float DIAG_SPEED = (float) Math.sqrt(Math.pow(AXIS_SPEED, 2)/2);
-	private boolean upPressed, downPressed, leftPressed, rightPressed, colorChanged;
+	private double axisSpeed, diagSpeed;
+	private boolean[] keys, atBounds;
+	private int boolCount;
+	private boolean colorChanged;
 	
-	public Player(Grid grid, int x, int y, int width, int height, Element element) {
+	public Player(Grid grid, double x, double y, int width, int height, Element element) {
 		super(grid, x, y, width, height, element);
-		speed = 0;
-		upPressed = false;
-		downPressed = false;
-		leftPressed = false;
-		rightPressed = false;
+		axisSpeed = 300;
+		xVel = axisSpeed;
+		yVel = axisSpeed;
+		diagSpeed = Math.sqrt(Math.pow(axisSpeed, 2)/2);
+		keys = new boolean[] {false, false, false, false};
+		atBounds = new boolean[] {false, false, false, false};
+		boolCount = 0;
 		colorChanged = false;
 	}
 	
@@ -28,17 +30,21 @@ public class Player extends Entity
 			color = element.toColor();
 			colorChanged = true;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_UP && !upPressed) {
-			upPressed = true;
+		if(e.getKeyCode() == KeyEvent.VK_UP && !keys[0]) {
+			keys[0] = true;
+			boolCount++;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_DOWN && !downPressed) {
-			downPressed = true;
+		if(e.getKeyCode() == KeyEvent.VK_DOWN && !keys[1]) {
+			keys[1] = true;
+			boolCount++;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_LEFT && !leftPressed) {
-			leftPressed = true;
+		if(e.getKeyCode() == KeyEvent.VK_LEFT && !keys[2]) {
+			keys[2] = true;
+			boolCount++;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT && !rightPressed) {
-			rightPressed = true;
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT && !keys[3]) {
+			keys[3] = true;
+			boolCount++;
 		}
 	}
 	
@@ -46,47 +52,58 @@ public class Player extends Entity
 		if(e.getKeyCode() == KeyEvent.VK_SHIFT && colorChanged) {
 			colorChanged = false;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_UP && upPressed) {
-			upPressed = false;
+		if(e.getKeyCode() == KeyEvent.VK_UP && keys[0]) {
+			keys[0] = false;
+			boolCount--;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_DOWN && downPressed) {
-			downPressed = false;
+		if(e.getKeyCode() == KeyEvent.VK_DOWN && keys[1]) {
+			keys[1] = false;
+			boolCount--;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_LEFT && leftPressed) {
-			leftPressed = false;
+		if(e.getKeyCode() == KeyEvent.VK_LEFT && keys[2]) {
+			keys[2] = false;
+			boolCount--;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT && rightPressed) {
-			rightPressed = false;
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT && keys[3]) {
+			keys[3] = false;
+			boolCount--;
 		}
 	}
 	
 	@Override
 	public boolean move(double dT) {
-		if	(
-				upPressed && leftPressed 	||
-				upPressed && rightPressed 	||
-				downPressed && leftPressed 	||
-				downPressed && rightPressed	)	{
-			speed = DIAG_SPEED;
-		} else {
-			speed = AXIS_SPEED;
+		
+		if(boolCount == 1) {
+			if(keys[0]) {
+				if(!atBounds[0] && y - yVel*dT <= 0) {
+					atBounds[0] = true;
+					grid.move(this, x, 0);
+				} else {
+					
+				}
+				grid.move(this, x, y - yVel*dT);
+			} else if(keys[1] && y + yVel*dT <= Window.HEIGHT - height) {
+				grid.move(this, x, y + yVel*dT);
+			} else if(keys[2] && x - xVel*dT >= 0) {
+				grid.move(this, x - xVel*dT, y);
+			} else if(keys[3] && x + xVel*dT <= Window.WIDTH - width) {
+				grid.move(this, x + xVel*dT, y);
+			}
 		}
-		if(upPressed && !downPressed && y-speed*dT >= 0) {
-			grid.move(this, x, y - speed*dT);
-		} else if(downPressed && !upPressed && y+height+speed*dT <= Window.HEIGHT) {
-			grid.move(this, x, y + speed*dT);
-		}
-		if(leftPressed && !rightPressed && x-speed*dT >= 0) {
-			grid.move(this, x - speed*dT, y);
-		} else if(rightPressed && !leftPressed && x+width+speed*dT <= Window.WIDTH) {
-			grid.move(this, x + speed*dT, y);
-		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		return true;
 	}
 	
-	public int getWidth() { return width; }
-	public double getAxisSpeed() { return AXIS_SPEED; }
+	public double getAxisSpeed() { return diagSpeed; }
 	
 	@Override
 	public String toString() {

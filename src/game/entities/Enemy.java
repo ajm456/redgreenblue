@@ -44,4 +44,6 @@ public abstract class Enemy extends Entity implements EnemyBehaviour
 		xVel = (targetX - x)*speed / absDist;
 		yVel = (targetY - y)*speed / absDist;
 	}
+	
+	public abstract void shoot(Player p);
 }

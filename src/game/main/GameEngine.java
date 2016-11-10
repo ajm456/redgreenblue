@@ -148,13 +148,23 @@ public class GameEngine implements CollisionListener
 		for(Enemy e : enemies) {
 			e.behave();
 			e.move(dT);
+			e.shoot(player);
 		}
 		
 		player.move(dT);
 
 		grid.checkCollisions();
 	}
-
+	
+	/**
+	 * Creates a shot Projectile originating from the given Entity.
+	 * @param e		the Entity firing the shot
+	 */
+	public void createShot(Entity e) {
+		Projectile pShot = new Projectile(grid, e.getX()-5+e.getWidth()/2, e.getY()-10-2*e.getYVel()*dT, 10, 10, e.getElement(), 600, 10, player);
+		projectiles.add(pShot);
+	}
+	
 	/**
 	 * Calls {@link game.frame.Window#render() Window.render()}, rendering
 	 * the current Graphics object.

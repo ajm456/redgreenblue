@@ -9,7 +9,7 @@ import game.grid.Grid;
 public abstract class Entity 
 {
 	protected Grid grid;
-	protected double x, y;
+	protected double x, y, xVel, yVel;
 	protected int width, height, cellX, cellY;
 	protected Color color;
 	protected Element element;
@@ -30,6 +30,8 @@ public abstract class Entity
 	public void setX(double x) { this.x = x; }
 	public double getY() { return y; }
 	public void setY(double y) { this.y = y; }
+	public double getYVel() { return yVel; }
+	public int getWidth() { return width; }
 	public int getCellX() { return cellX; }
 	public void setCellX(int x) { cellX = x; }
 	public int getCellY() { return cellY; }
