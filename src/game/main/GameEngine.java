@@ -8,7 +8,6 @@ import java.util.Iterator;
 
 import javax.swing.SwingUtilities;
 
-import game.bts.TestBTLibrary;
 import game.enemy_types.SampleEnemy;
 import game.entities.Element;
 import game.entities.Enemy;
@@ -19,13 +18,6 @@ import game.frame.Window;
 import game.grid.CollisionEvent;
 import game.grid.CollisionListener;
 import game.grid.Grid;
-import jbt.execution.core.BTExecutorFactory;
-import jbt.execution.core.ContextFactory;
-import jbt.execution.core.ExecutionTask.Status;
-import jbt.execution.core.IBTExecutor;
-import jbt.execution.core.IBTLibrary;
-import jbt.execution.core.IContext;
-import jbt.model.core.ModelTask;
 
 /**
  * Controls the flow of gameplay and manages all events and interactions between
@@ -40,11 +32,6 @@ public class GameEngine implements CollisionListener
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Projectile> projectiles;
 	private Grid grid;
-	
-	private IBTLibrary btLibrary;
-	private IContext context;
-	ModelTask sampleEnemy1Tree;
-	IBTExecutor btExecutor;
 
 	private double dT = 0;
 
@@ -56,10 +43,6 @@ public class GameEngine implements CollisionListener
 		enemies = new ArrayList<Enemy>();
 		projectiles = new ArrayList<Projectile>();
 		grid = new Grid(this);
-		
-		btLibrary = new TestBTLibrary();
-		context = ContextFactory.createContext(btLibrary);
-		context.setVariable("grid", grid);
 	}
 
 	/**
@@ -108,20 +91,11 @@ public class GameEngine implements CollisionListener
 	}
 
 	/**
-	 * Builds behaviour trees for assigning AI behaviours to enemies.
-	 */
-	public void setUpTrees() {
-		sampleEnemy1Tree = btLibrary.getBT("test");
-		btExecutor = BTExecutorFactory.createBTExecutor(sampleEnemy1Tree, context);
-	}
-
-	/**
 	 * Adds some Enemy objects to the current game.
 	 */
 	public void addSampleEnemies() {		
 		SampleEnemy e1 = new SampleEnemy(grid, 50, 70, 40, 40, Element.GREEN, 20);
 		enemies.add(e1);
-		context.setVariable("enemy1", e1);
 	}
 	
 	/**
@@ -147,7 +121,6 @@ public class GameEngine implements CollisionListener
 	 * Grid class.
 	 */
 	public void update(double dT) {
-		context.setVariable("dT", dT);
 		this.dT = dT;
 		
 		// Move projectiles - removes ones out of bounds.
@@ -157,10 +130,6 @@ public class GameEngine implements CollisionListener
 			if(!p.move(dT)) {
 				i1.remove();
 			}
-		}
-		
-		if(btExecutor.getStatus() == Status.RUNNING || btExecutor.getStatus() == Status.UNINITIALIZED) {
-			btExecutor.tick();
 		}
 		
 		player.move(dT);

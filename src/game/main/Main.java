@@ -8,7 +8,6 @@ public class Main
 		gm.buildWindow();
 		gm.addPlayer();
 		gm.addSampleEnemies();
-		gm.setUpTrees();
 
 		long t1 = 0L;
 		long t2 = System.nanoTime();

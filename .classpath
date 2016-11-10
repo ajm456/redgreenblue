@@ -2,10 +2,5 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="jars/JBTCore.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/C:/Users/Andrew/OneDrive/Docs/misc/java_nonsense/RedGreenBlue/jars/jbt_doc/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
